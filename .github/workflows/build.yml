@@ -13,7 +13,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.0'
+          flutter-version: '3.19.0'  # 更新到较新版本，支持 Dart 3.9.2+
           
       - name: Enable macOS desktop support
         run: flutter config --enable-macos-desktop
@@ -37,13 +37,13 @@ jobs:
             "build/macos/Build/Products/Release/My Web Launcher.app"
             
       - name: Upload DMG artifact
-        uses: actions/upload-artifact@v4  # 更新为 v4
+        uses: actions/upload-artifact@v4
         with:
           name: macos-app-dmg
           path: My_Web_Launcher.dmg
           
       - name: Upload app folder
-        uses: actions/upload-artifact@v4  # 更新为 v4
+        uses: actions/upload-artifact@v4
         with:
           name: macos-app-folder
           path: build/macos/Build/Products/Release/My Web Launcher.app
