@@ -13,7 +13,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'  # 更新到较新版本，支持 Dart 3.9.2+
+          flutter-version: '3.35.5'  # 使用建议的版本
           
       - name: Enable macOS desktop support
         run: flutter config --enable-macos-desktop
