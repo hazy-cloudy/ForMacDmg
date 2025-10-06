@@ -1,0 +1,49 @@
+name: Build macOS App
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.0'
+          
+      - name: Enable macOS desktop support
+        run: flutter config --enable-macos-desktop
+        
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build macOS app
+        run: flutter build macos
+        
+      - name: Create DMG
+        run: |
+          brew install create-dmg
+          create-dmg \
+            --volname "My Web Launcher" \
+            --window-pos 200 120 \
+            --window-size 800 400 \
+            --icon-size 100 \
+            --app-drop-link 600 185 \
+            "My_Web_Launcher.dmg" \
+            "build/macos/Build/Products/Release/My Web Launcher.app"
+            
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-app-dmg
+          path: My_Web_Launcher.dmg
+          
+      - name: Upload app folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-app-folder
+          path: build/macos/Build/Products/Release/My Web Launcher.app
